@@ -1,0 +1,19 @@
+{
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-typescript"
+  ],
+  "env": {
+    "development": {
+      "presets": []
+    }
+  },
+  "plugins": [
+    [
+      "@babel/plugin-proposal-class-properties",
+      {
+        "loose": true
+      }
+    ]
+  ]
+}
