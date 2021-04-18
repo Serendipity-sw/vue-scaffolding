@@ -35,6 +35,9 @@ module.exports = {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
+              modules: {
+                localIdentName: "[path]__[name]__[local]--[hash:base64:12]",
+              },
               sourceMap: true
             }
           },
@@ -109,7 +112,7 @@ module.exports = {
     port: 8080,
     hot: true,
     open: false,
-    after () {
+    after() {
       open('http://localhost:' + this.port);
     }
   }
