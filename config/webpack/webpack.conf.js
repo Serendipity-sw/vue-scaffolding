@@ -3,23 +3,23 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const EncodingPlugin = require('webpack-encoding-plugin');
 const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
+const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 const open = require('open');
-const Webpack = require('webpack');
+
 module.exports = {
-  entry: './src/app.jsx',
+  entry: './src/main.ts',
   output: {
     charset: true,
     path: path.resolve(__dirname, '../../dist'),
-    filename: './js/[name].bundle.js',
-    clean: true
+    filename: './js/[hash].[name].js',
+    clean: true,
   },
   module: {
     rules: [
       {
-        test: /\.(js|ts)$/,
-        exclude: /(node_modules)/,
-        use: 'babel-loader'
+        test: /\.vue$/,
+        loader: 'vue-loader',
       },
       {
         test: /\.pcss$/,
@@ -28,38 +28,57 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../'
-            }
+              publicPath: '../',
+            },
           },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: "[path]__[name]__[local]--[hash:base64:12]",
+                localIdentName: '[path]__[name]__[local]--[hash:base64:12]',
               },
-              sourceMap: true
-            }
+              sourceMap: true,
+            },
           },
           {
-            loader: 'postcss-loader'
-          }
-        ]
+            loader: 'postcss-loader',
+          },
+        ],
       },
       {
         test: /\.(?:ico|png|svg|jpg|jpeg|gif)$/i,
         loader: 'file-loader',
         options: {
           name: './static/[name].[hash:8].[ext]',
-        }
+        },
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
         loader: 'file-loader',
         options: {
           name: './static/[name].[hash:8].[ext]',
-        }
-      }
+        },
+      },
+      {
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: { babelrc: true },
+          },
+          {
+            loader: 'ts-loader',
+            options: { appendTsSuffixTo: [/\.vue$/] },
+          },
+        ],
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: 'babel-loader',
+      },
     ],
   },
   optimization: {
@@ -69,7 +88,6 @@ module.exports = {
       maxSize: 250000,
     },
     minimizer: [
-      new Webpack.HotModuleReplacementPlugin(),
       new CssMinimizerPlugin({
         minimizerOptions: {
           preset: 'advanced',
@@ -82,30 +100,37 @@ module.exports = {
         uglifyJS: {
           output: {
             beautify: false,
-            comments: false
+            comments: false,
           },
           compress: {
             drop_console: true,
             collapse_vars: true,
-            reduce_vars: true
-          }
+            reduce_vars: true,
+          },
         },
       }),
-    ]
+    ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.vue'],
+    alias: {
+      '@': path.resolve('src'),
+    },
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: './css/[name].bundle.css',
-    }),
+    new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
-      title: 'webpack Boilerplate',
+      title: 'ceshi',
       template: path.resolve(__dirname, '../../template.html'),
       filename: 'index.html',
-      inject: 'body'
+      inject: 'body',
+    }),
+    new MiniCssExtractPlugin({
+      filename: './css/[hash].[name].css',
     }),
     new EncodingPlugin({
-      encoding: 'UTF-8'
-    })
+      encoding: 'UTF-8',
+    }),
   ],
   devServer: {
     host: '0.0.0.0',
@@ -114,6 +139,6 @@ module.exports = {
     open: false,
     after() {
       open('http://localhost:' + this.port);
-    }
-  }
+    },
+  },
 };
