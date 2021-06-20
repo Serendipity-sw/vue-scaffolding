@@ -22,9 +22,9 @@
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-typescript": "^7.13.0",
     "@types/webpack-env": "^1.16.0",
+    "@vue/compiler-sfc": "^3.0.11",
     "autoprefixer": "^10.2.5",
     "babel-loader": "^8.2.2",
-    "vue-loader": "^16.2.0",
     "css-loader": "^5.1.1",
     "css-minimizer-webpack-plugin": "^1.2.0",
     "cssnano-preset-advanced": "^4.0.7",
@@ -47,15 +47,17 @@
     "style-loader": "^2.0.0",
     "ts-loader": "^9.0.0",
     "typescript": "^4.2.4",
+    "vue-loader": "^16.2.0",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-encoding-plugin": "^0.3.1",
-    "webpack-parallel-uglify-plugin": "^2.0.0",
-    "@vue/compiler-sfc": "^3.0.11"
+    "webpack-parallel-uglify-plugin": "^2.0.0"
   },
   "dependencies": {
     "vue": "^3.0.11",
-    "vue-router": "^4.0.6"
+    "vue-router": "^4.0.6",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpackbar": "^5.0.0-3"
   }
 }

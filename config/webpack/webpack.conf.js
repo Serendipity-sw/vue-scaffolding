@@ -6,6 +6,9 @@ const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 const open = require('open');
+const Webpack = require('webpack');
+const WebpackBar = require('webpackbar');
+const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
 module.exports = {
   entry: './src/main.ts',
@@ -118,6 +121,8 @@ module.exports = {
     },
   },
   plugins: [
+    // new BundleAnalyzerPlugin(),  打包优化检查
+    new WebpackBar({}),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       title: 'ceshi',
