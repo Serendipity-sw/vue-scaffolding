@@ -4,7 +4,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: "/",
         name: "Index",
-        component: () => import('@/views/Demo.vue')
+        component: () => import('@/views/Index.jsx')
     }
 ]
 

@@ -25,6 +25,10 @@ module.exports = {
         loader: 'vue-loader',
       },
       {
+        test: /\.jsx$/,
+        loader: 'babel-loader',
+      },
+      {
         test: /\.pcss$/,
         exclude: /node_modules/,
         use: [
