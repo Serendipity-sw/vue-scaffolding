@@ -56,8 +56,10 @@
     "webpack-parallel-uglify-plugin": "^2.0.0"
   },
   "dependencies": {
+    "rxjs": "^7.3.0",
     "vue": "^3.0.11",
     "vue-router": "^4.0.6",
+    "vuse-rx": "^0.13.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpackbar": "^5.0.0-3"
   }

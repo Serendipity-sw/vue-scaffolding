@@ -1,34 +1,35 @@
-import DemoComponent from "@/components/DemoComponent.vue";
-import { defineComponent, provide, reactive, ref } from "@vue/runtime-core";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, toRef} from "vue";
+import {useRxState, syncRef} from 'vuse-rx';
+import {tap} from 'rxjs/operators';
 
 export default defineComponent({
   setup() {
-    // setup中使用route和router
-    const route = useRoute();
-    const router = useRouter();
-    console.log("setup路由相关", route, router);
 
-    const demoProp = ref({
-      name: "propData",
-      value: 1,
-    });
+    const {
+      actions: {
+        increment,
+        setCount
+      },
+      state,
+      state$
+    } = useRxState({count: 0})({
+      increment: () => (state, mutation) => ({
+        count: state.count + 1
+      }),
+      setCount: (count) => ({
+        count: isNaN(Number(count)) ? 0 : Number(count)
+      }),
+    }, state$ => state$.pipe(tap(state => console.log('state is updated', state))));
 
-    // 注入示例
-    const injectData = reactive({
-      name: "demoInject",
-      value: 0,
-    });
-    provide("injectData", injectData);
+    state$.subscribe(state => console.log('counter: ', state.count));
 
-    function demoPropValueChange() {
-      demoProp.value.value++;
-    }
+    const countRef = syncRef(toRef(state, 'count'), {to: String})
 
-    return ()=>(
+    return () => (
       <div>
-        <DemoComponent demoProp={demoProp.value} />
-        <button onClick={demoPropValueChange}>click</button>
+        <p>Counter: {state.count}</p>
+        <button onClick={increment}>increment</button>
+        <input v-model={countRef.value} />
       </div>
     )
   },
