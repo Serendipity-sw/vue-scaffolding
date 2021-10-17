@@ -27,6 +27,7 @@
   "devDependencies": {
     "@babel/core": "^7.13.8",
     "@babel/plugin-proposal-class-properties": "^7.13.0",
+    "@babel/plugin-proposal-decorators": "^7.15.4",
     "@babel/preset-env": "^7.13.9",
     "@babel/preset-typescript": "^7.13.0",
     "@types/webpack-env": "^1.16.0",
@@ -72,6 +73,8 @@
     "qs": "^6.10.1",
     "rxjs": "^7.3.0",
     "vue": "^3.0.11",
+    "vue-class-component": "^8.0.0-0",
+    "vue-property-decorator": "^10.0.0-rc.3",
     "vue-router": "^4.0.6",
     "vuse-rx": "^0.13.1",
     "webpack-bundle-analyzer": "^4.4.2",
