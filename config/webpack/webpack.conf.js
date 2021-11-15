@@ -7,6 +7,7 @@ const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 const open = require('open');
 const WebpackBar = require('webpackbar');
+const portFinderSync = require('portfinder-sync')
 
 module.exports = {
   entry: './src/main.ts',
@@ -140,7 +141,7 @@ module.exports = {
   ],
   devServer: {
     host: '0.0.0.0',
-    port: 8080,
+    port: portFinderSync.getPort(3000),
     hot: true,
     open: false,
     after() {
