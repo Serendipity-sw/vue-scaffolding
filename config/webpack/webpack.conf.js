@@ -7,6 +7,8 @@ const { VueLoaderPlugin } = require('vue-loader');
 const path = require('path');
 const open = require('open');
 const WebpackBar = require('webpackbar');
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const TerserPlugin = require("terser-webpack-plugin")
 const portFinderSync = require('portfinder-sync')
 
 module.exports = {
@@ -94,6 +96,7 @@ module.exports = {
       maxSize: 250000,
     },
     minimizer: [
+      new TerserPlugin(),
       new CssMinimizerPlugin({
         minimizerOptions: {
           preset: 'advanced',
@@ -138,6 +141,9 @@ module.exports = {
     new EncodingPlugin({
       encoding: 'UTF-8',
     }),
+    new CompressionWebpackPlugin({
+      algorithm: 'gzip'
+    })
   ],
   devServer: {
     host: '0.0.0.0',
