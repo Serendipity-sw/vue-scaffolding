@@ -1,9 +1,7 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import homeRoutes from "./modules/home.route";
+import { createRouter, createWebHashHistory } from 'vue-router'
+import homeRoutes from './modules/home.route'
 
 export default createRouter({
-    history: createWebHashHistory(),
-    routes: [
-        ...homeRoutes
-    ]
+  history: createWebHashHistory(),
+  routes: [...homeRoutes]
 })
