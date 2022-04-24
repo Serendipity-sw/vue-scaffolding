@@ -58,16 +58,16 @@ module.exports = {
       },
       {
         test: /\.(?:ico|png|svg|jpg|jpeg|gif)$/i,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
-          name: './static/[name].[hash:8].[ext]',
+          name: './static/[name].[hash].[ext]',
         },
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
-          name: './static/[name].[hash:8].[ext]',
+          name: './static/[name].[hash].[ext]',
         },
       },
       {
@@ -131,6 +131,11 @@ module.exports = {
     new HtmlWebpackPlugin( {
       template: path.resolve( __dirname, '../../template.html' ),
       filename: 'index.html',
+      minify: {
+        removeComments: true,
+        collapseWhitespace: true,
+        minifyCSS: true
+      },
       inject: 'body',
     } ),
     new MiniCssExtractPlugin( {
