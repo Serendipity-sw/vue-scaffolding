@@ -1,5 +1,6 @@
 import { useRouter } from 'vue-router'
 import { Options, Vue } from 'vue-class-component'
+import style from './index.pcss'
 
 @Options({
   components: {}
@@ -20,10 +21,10 @@ export default class extends Vue {
 
   render() {
     return (
-      <div>
+      <div className={style.name}>
         <div>
-          <span onClick={this.saveData}>提交</span>
-          <span onClick={this.leavePageBtn}>取消</span>
+          <span onClick={this.saveData}>提交1</span>
+          <span onClick={this.leavePageBtn}>取2消</span>
         </div>
       </div>
     )
