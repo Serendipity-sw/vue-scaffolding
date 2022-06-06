@@ -1,35 +1,35 @@
-const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
-const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
-const EncodingPlugin = require( 'webpack-encoding-plugin' );
-const ParallelUglifyPlugin = require( 'webpack-parallel-uglify-plugin' );
-const { VueLoaderPlugin } = require( 'vue-loader' );
-const path = require( 'path' );
-const WebpackBar = require( 'webpackbar' );
-const CompressionWebpackPlugin = require( 'compression-webpack-plugin' )
-const TerserPlugin = require( "terser-webpack-plugin" )
-const portFinderSync = require( 'portfinder-sync' )
-const ESLintPlugin = require( 'eslint-webpack-plugin' );
-const DashboardPlugin = require( 'webpack-dashboard/plugin' );
-const webpack = require( 'webpack' )
+const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
+const EncodingPlugin = require('webpack-encoding-plugin')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+const path = require('path')
+const WebpackBar = require('webpackbar')
+const CompressionWebpackPlugin = require('compression-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
+const portFinderSync = require('portfinder-sync')
+const ESLintPlugin = require('eslint-webpack-plugin')
+const DashboardPlugin = require('webpack-dashboard/plugin')
+const webpack = require('webpack')
 
 module.exports = {
   entry: './src/main.ts',
   output: {
     charset: true,
-    path: path.resolve( __dirname, '../../dist' ),
+    path: path.resolve(__dirname, '../../dist'),
     filename: './js/[name].[chunkhash].js',
-    clean: true,
+    clean: true
   },
   module: {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: 'vue-loader'
       },
       {
         test: /\.jsx$/,
-        loader: 'babel-loader',
+        loader: 'babel-loader'
       },
       {
         test: /\.pcss$/,
@@ -38,37 +38,37 @@ module.exports = {
           {
             loader: MiniCssExtractPlugin.loader,
             options: {
-              publicPath: '../',
-            },
+              publicPath: '../'
+            }
           },
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: '[path]__[name]__[local]--[hash:base64:12]',
+                localIdentName: '[path]__[name]__[local]--[hash:base64:12]'
               },
-              sourceMap: true,
-            },
+              sourceMap: true
+            }
           },
           {
-            loader: 'postcss-loader',
-          },
-        ],
+            loader: 'postcss-loader'
+          }
+        ]
       },
       {
         test: /\.(?:ico|png|svg|jpg|jpeg|gif)$/i,
         loader: 'file-loader',
         options: {
-          name: './static/[name].[hash:8].[ext]',
-        },
+          name: './static/[name].[hash:8].[ext]'
+        }
       },
       {
         test: /\.(woff(2)?|eot|ttf|otf|svg|)$/,
         loader: 'file-loader',
         options: {
-          name: './static/[name].[hash:8].[ext]',
-        },
+          name: './static/[name].[hash:8].[ext]'
+        }
       },
       {
         test: /\.ts$/,
@@ -76,83 +76,87 @@ module.exports = {
         use: [
           {
             loader: 'babel-loader',
-            options: { babelrc: true },
+            options: { babelrc: true }
           },
           {
             loader: 'ts-loader',
-            options: { appendTsSuffixTo: [ /\.vue$/ ] },
-          },
-        ],
+            options: { appendTsSuffixTo: [/\.vue$/] }
+          }
+        ]
       },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loader: 'babel-loader',
-      },
-    ],
+        loader: 'babel-loader'
+      }
+    ]
   },
   optimization: {
     usedExports: true,
     splitChunks: {
       minSize: 10000,
-      maxSize: 250000,
+      maxSize: 250000
     },
     minimizer: [
       new TerserPlugin(),
       new CssMinimizerPlugin(),
-      new ParallelUglifyPlugin( {
+      new ParallelUglifyPlugin({
         cacheDir: '.cache/',
         test: /.js$/,
         workerCount: 2,
         uglifyJS: {
           output: {
             beautify: false,
-            comments: false,
+            comments: false
           },
           compress: {
             drop_console: true,
             collapse_vars: true,
-            reduce_vars: true,
-          },
-        },
-      } ),
-    ],
+            reduce_vars: true
+          }
+        }
+      })
+    ]
   },
   resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.vue' ],
+    extensions: ['.tsx', '.ts', '.js', '.vue'],
     alias: {
-      '@': path.resolve( 'src' ),
-    },
+      '@': path.resolve('src')
+    }
   },
   plugins: [
-    new WebpackBar( {} ),
-    new ESLintPlugin(),
+    new WebpackBar({}),
+    new ESLintPlugin({
+      fix: true, // 自动修复
+      exclude: 'node_modules', // 默认值mode_modules
+      extensions: ['js', 'vue', 'jsx']
+    }),
     new VueLoaderPlugin(),
-    new HtmlWebpackPlugin( {
-      template: path.resolve( __dirname, '../../template.html' ),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, '../../template.html'),
       filename: 'index.html',
-      inject: 'body',
-    } ),
-    new MiniCssExtractPlugin( {
-      filename: './css/[name].[chunkhash].css',
-    } ),
-    new EncodingPlugin( {
-      encoding: 'UTF-8',
-    } ),
-    new CompressionWebpackPlugin( {
+      inject: 'body'
+    }),
+    new MiniCssExtractPlugin({
+      filename: './css/[name].[chunkhash].css'
+    }),
+    new EncodingPlugin({
+      encoding: 'UTF-8'
+    }),
+    new CompressionWebpackPlugin({
       algorithm: 'gzip'
-    } ),
+    }),
     new DashboardPlugin(),
     new webpack.HotModuleReplacementPlugin()
   ],
   devServer: {
     host: '127.0.0.1',
-    port: portFinderSync.getPort( 3000 ),
+    port: portFinderSync.getPort(3000),
     hot: false,
     open: true,
     client: {
       overlay: true,
       progress: true
     }
-  },
-};
+  }
+}

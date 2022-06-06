@@ -18,7 +18,6 @@
       // setup中使用route和router
       const route = useRoute()
       const router = useRouter()
-      console.log('setup路由相关', route, router)
 
       const demoProp = ref({
         name: 'propData',

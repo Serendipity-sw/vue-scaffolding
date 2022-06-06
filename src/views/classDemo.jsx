@@ -13,7 +13,6 @@ export default class extends Vue {
   }
 
   leavePageBtn = (_) => {
-    console.log(12)
     this.#leavePage()
   }
 
