@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require( 'html-webpack-plugin' );
 const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 const CssMinimizerPlugin = require( 'css-minimizer-webpack-plugin' );
-const EncodingPlugin = require( 'webpack-encoding-plugin' );
 const ParallelUglifyPlugin = require( 'webpack-parallel-uglify-plugin' );
 const { VueLoaderPlugin } = require( 'vue-loader' );
 const path = require( 'path' );
@@ -9,7 +8,6 @@ const WebpackBar = require( 'webpackbar' );
 const CompressionWebpackPlugin = require( 'compression-webpack-plugin' )
 const TerserPlugin = require( "terser-webpack-plugin" )
 const portFinderSync = require( 'portfinder-sync' )
-const ESLintPlugin = require( 'eslint-webpack-plugin' );
 const DashboardPlugin = require( 'webpack-dashboard/plugin' );
 const webpack = require( 'webpack' )
 
@@ -20,6 +18,12 @@ module.exports = {
     path: path.resolve( __dirname, '../../dist' ),
     filename: './js/[name].[chunkhash].js',
     clean: true,
+  },
+  resolve: {
+    alias: {
+      src: path.resolve( __dirname, '../../src/' )
+    },
+    extensions: [ '.js','.vue', '.jsx','.tsx','.json' ]
   },
   module: {
     rules: [
@@ -32,29 +36,8 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
-        test: /\.pcss$/,
-        exclude: /node_modules/,
-        use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../',
-            },
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: {
-                localIdentName: '[path]__[name]__[local]--[hash:base64:12]',
-              },
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-          },
-        ],
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
       },
       {
         test: /\.(?:ico|png|svg|jpg|jpeg|gif)$/i,
@@ -126,7 +109,6 @@ module.exports = {
   },
   plugins: [
     new WebpackBar( {} ),
-    new ESLintPlugin(),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin( {
       template: path.resolve( __dirname, '../../template.html' ),
@@ -140,9 +122,6 @@ module.exports = {
     } ),
     new MiniCssExtractPlugin( {
       filename: './css/[name].[chunkhash].css',
-    } ),
-    new EncodingPlugin( {
-      encoding: 'UTF-8',
     } ),
     new CompressionWebpackPlugin( {
       algorithm: 'gzip'

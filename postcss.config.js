@@ -1,12 +1,17 @@
 module.exports = {
   plugins: [
+    require('postcss-nested'),
+    require('postcss-import'),
+    require('postcss-atroot'),
+    require('postcss-property-lookup'),
     require('autoprefixer'),
     require('postcss-use'),
+    require('cssnano')({
+      preset: 'default',
+    }),
+    require('postcss-advanced-variables'),
     require('postcss-autoreset')({
       reset: {
-        margin: 12,
-        padding: 0,
-        borderRadius: 0,
       },
     }),
     require('postcss-initial'),
@@ -15,16 +20,6 @@ module.exports = {
       centerMethod: 'flexbox'
     }),
     require('postcss-short'),
-    require('postcss-assets'),
-    require('postcss-font-magician')({}),
-    require('postcss-pxtorem')({
-      rootValue: 100,
-      unitPrecision: 5,
-      propList: ['*'],
-      selectorBlackList: [],
-      replace: true,
-      mediaQuery: false,
-      minPixelValue: 0
-    })
+    require('postcss-assets')
   ]
 };
