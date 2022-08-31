@@ -13,9 +13,7 @@
     "build-release:zip": "yarn run build-release && yarn run zip",
     "build:zip": "yarn run build && yarn run zip",
     "format": "prettier --write ./src",
-    "lint": "eslint src/**/*.{js,vue,ts,jsx,tsx} --fix",
-    "upload-build-develop-fix": "yarn run build-develop-fix && gulp buildTime && gulp uploadDevelop",
-    "upload-build-release": "yarn run build-release && gulp buildTime && gulp uploadRelease"
+    "lint": "eslint src/**/*.{js,vue,ts,jsx,tsx} --fix"
   },
   "repository": {
     "type": "git",

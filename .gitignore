@@ -9,3 +9,5 @@ dist
 dist/*
 *.lock
 .cache
+backup
+*.zip
