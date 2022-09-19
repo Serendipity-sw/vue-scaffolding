@@ -127,7 +127,7 @@ module.exports = {
   devServer: {
     host: '127.0.0.1',
     port: portFinderSync.getPort( 3000 ),
-    hot: false,
+    hot: true,
     open: true,
     client: {
       overlay: true,
