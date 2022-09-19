@@ -21,9 +21,10 @@ module.exports = {
   },
   resolve: {
     alias: {
-      src: path.resolve( __dirname, '../../src/' )
+      src: path.resolve( __dirname, '../../src/' ),
+      '@': path.resolve( 'src' )
     },
-    extensions: [ '.js','.vue', '.jsx','.tsx','.json' ]
+    extensions: [ '.js','.ts','.vue', '.jsx','.tsx','.json' ]
   },
   module: {
     rules: [
@@ -100,12 +101,6 @@ module.exports = {
         },
       } ),
     ],
-  },
-  resolve: {
-    extensions: [ '.tsx', '.ts', '.js', '.vue' ],
-    alias: {
-      '@': path.resolve( 'src' ),
-    },
   },
   plugins: [
     new WebpackBar( {} ),
