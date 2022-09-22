@@ -1,27 +1,22 @@
-const {merge} = require('webpack-merge');
+const {merge} = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.conf')
 const webpack = require('webpack')
-const MiniCssExtractPlugin = require( 'mini-css-extract-plugin' );
 
 let config = merge(baseWebpackConfig, {
-  module:{
-    rules:[
+  devtool: 'eval-cheap-module-source-map',
+  module: {
+    rules: [
       {
         test: /\.(css|pcss)$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
               importLoaders: 1,
               modules: {
-                localIdentName: '[path]__[name]__[local]'
+                localIdentName: '[path]__[name]__[local]--[hash:base64:12]'
               },
               sourceMap: true
             }
@@ -40,4 +35,4 @@ let config = merge(baseWebpackConfig, {
   ]
 })
 
-module.exports = config;
+module.exports = config
