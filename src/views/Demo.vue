@@ -1,13 +1,23 @@
 <template>
   <div>
-    <demo-component :demoProp="demoProp" />
+    <demo-component :demoProp="demoProp"/>
     <button @click="demoPropValueChange">click</button>
+    <div :class="style.init">
+      <span>姓名</span>
+      <input type="text" v-model="name">
+      <span>年龄</span>
+      <input type="text" v-model="age">
+      <span>当年龄为44岁时触发按钮事件会被阻止</span>
+      <button @click="handleClick">触发按钮</button>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import DemoComponent from "@/components/DemoComponent.vue";
-import { defineComponent, provide, reactive, ref } from "@vue/runtime-core";
-import { useRoute, useRouter } from "vue-router";
+import {defineComponent, provide, reactive, ref} from "@vue/runtime-core";
+import {PersonStore} from "@/views/store";
+// @ts-ignore
+import style from './demo.pcss'
 
 export default defineComponent({
   name: "Demo",
@@ -15,10 +25,7 @@ export default defineComponent({
     DemoComponent,
   },
   setup() {
-    // setup中使用route和router
-    const route = useRoute();
-    const router = useRouter();
-    console.log("setup路由相关", route, router);
+    const personStoreData = PersonStore.InitDeferDestroy()
 
     const demoProp = ref({
       name: "propData",
@@ -28,7 +35,7 @@ export default defineComponent({
     // 注入示例
     const injectData = reactive({
       name: "demoInject",
-      value: 0,
+      value: 3,
     });
     provide("injectData", injectData);
 
@@ -38,6 +45,11 @@ export default defineComponent({
 
     return {
       demoProp,
+      name: personStoreData.name,
+      // @ts-ignore
+      age: personStoreData.age,
+      handleClick: personStoreData.click,
+      style,
       demoPropValueChange,
     };
   },

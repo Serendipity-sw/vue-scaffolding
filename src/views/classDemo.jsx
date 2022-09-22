@@ -1,6 +1,7 @@
-import { useRouter } from 'vue-router'
-import { Options, Vue } from 'vue-class-component'
+import {useRouter} from 'vue-router'
+import {Options, Vue} from 'vue-class-component'
 import style from './index.pcss'
+import {serverMethod} from "./decoratorsDemo"
 
 @Options({
   components: {}
@@ -16,7 +17,10 @@ export default class extends Vue {
     this.#leavePage()
   }
 
-  saveData = _ => {
+  @serverMethod
+  saveData(){
+    debugger
+    console.log('nihao')
   }
 
   render() {
@@ -27,6 +31,6 @@ export default class extends Vue {
           <span onClick={this.leavePageBtn}>取2消</span>
         </div>
       </div>
-    );
+    )
   }
 }

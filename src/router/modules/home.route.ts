@@ -1,10 +1,10 @@
-import { RouteRecordRaw } from "vue-router";
+import {RouteRecordRaw} from "vue-router";
 
 const routes: RouteRecordRaw[] = [
     {
         path: "/",
         name: "Index",
-        component: () => import('@/views/classDemo.jsx')
+        component: () => import('@/views/Demo.vue')
     }
 ]
 
