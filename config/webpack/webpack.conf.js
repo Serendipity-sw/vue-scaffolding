@@ -3,7 +3,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 const path = require('path')
 const WebpackBar = require('webpackbar')
-const portFinderSync = require('portfinder-sync')
 
 module.exports = {
   entry: './src/main.ts',
@@ -11,7 +10,7 @@ module.exports = {
     charset: true,
     path: path.resolve(__dirname, '../../dist'),
     filename: './js/[name].[chunkhash].js',
-    clean: true,
+    clean: true
   },
   resolve: {
     alias: {
@@ -24,7 +23,7 @@ module.exports = {
     rules: [
       {
         test: /\.vue$/,
-        loader: 'vue-loader',
+        loader: 'vue-loader'
       },
       {
         test: /\.(js|jsx)$/,
@@ -33,7 +32,7 @@ module.exports = {
           'cache-loader',
           'thread-loader',
           'babel-loader'
-        ],
+        ]
       },
       {
         test: /\.ts$/,
@@ -42,13 +41,13 @@ module.exports = {
           'cache-loader',
           {
             loader: 'babel-loader',
-            options: {babelrc: true},
+            options: {babelrc: true}
           },
           {
             loader: 'ts-loader',
-            options: {appendTsSuffixTo: [/\.vue$/]},
-          },
-        ],
+            options: {appendTsSuffixTo: [/\.vue$/]}
+          }
+        ]
       },
       {
         test: /\.css$/,
@@ -59,12 +58,12 @@ module.exports = {
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 25 * 1024, // 25kb
+            maxSize: 25 * 1024 // 25kb
           }
         },
         generator: {
           // 打包到 image 文件下
-          filename: './images/[contenthash][ext][query]',
+          filename: './images/[contenthash][ext][query]'
         }
       },
       {
@@ -72,15 +71,15 @@ module.exports = {
         type: 'asset',
         parser: {
           dataUrlCondition: {
-            maxSize: 25 * 1024, // 25kb
+            maxSize: 25 * 1024 // 25kb
           }
         },
         generator: {
           // 打包到 image 文件下
-          filename: './images/[contenthash][ext][query]',
+          filename: './images/[contenthash][ext][query]'
         }
       }
-    ],
+    ]
   },
   plugins: [
     new WebpackBar({}),
@@ -93,20 +92,10 @@ module.exports = {
         collapseWhitespace: true,
         minifyCSS: true
       },
-      inject: 'body',
+      inject: 'body'
     }),
     new MiniCssExtractPlugin({
-      filename: './css/[name].[chunkhash].css',
+      filename: './css/[name].[chunkhash].css'
     })
-  ],
-  devServer: {
-    host: '127.0.0.1',
-    port: portFinderSync.getPort(3000),
-    hot: true,
-    open: true,
-    client: {
-      overlay: true,
-      progress: true
-    }
-  },
+  ]
 }
