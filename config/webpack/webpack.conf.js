@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const {VueLoaderPlugin} = require('vue-loader')
 const path = require('path')
 const WebpackBar = require('webpackbar')
@@ -82,7 +81,11 @@ module.exports = {
     ]
   },
   plugins: [
-    new WebpackBar({}),
+    new WebpackBar({
+      color: "#85d",
+      basic: false,
+      profile: false
+    }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '../../template.html'),
@@ -93,9 +96,6 @@ module.exports = {
         minifyCSS: true
       },
       inject: 'body'
-    }),
-    new MiniCssExtractPlugin({
-      filename: './css/[name].[chunkhash].css'
     })
   ]
 }

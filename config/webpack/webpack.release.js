@@ -66,6 +66,9 @@ let config = merge(baseWebpackConfig, {
   },
   plugins: [
     new DashboardPlugin(),
+    new MiniCssExtractPlugin({
+      filename: './css/[name].bundle.[chunkhash].css'
+    }),
     new CompressionWebpackPlugin({
       algorithm: 'gzip'
     }),
