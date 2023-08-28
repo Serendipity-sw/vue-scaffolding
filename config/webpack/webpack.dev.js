@@ -1,20 +1,26 @@
 const {merge} = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.conf')
 const webpack = require('webpack')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const portFinderSync = require('portfinder-sync')
 const {WebpackOpenBrowser} = require('webpack-open-browser')
 
 const port = portFinderSync.getPort(3000)
 
 let config = merge(baseWebpackConfig, {
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'source-map',
   module: {
     rules: [
       {
         test: /\.(css|pcss)$/,
         exclude: /node_modules/,
         use: [
-          'style-loader',
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: '../'
+            }
+          },
           {
             loader: 'css-loader',
             options: {

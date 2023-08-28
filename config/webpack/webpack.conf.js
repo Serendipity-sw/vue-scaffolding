@@ -88,6 +88,7 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new HtmlWebpackPlugin({
+      title: 'vue-scaffolding',
       template: path.resolve(__dirname, '../../template.html'),
       filename: 'index.html',
       minify: {
