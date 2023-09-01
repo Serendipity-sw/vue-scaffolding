@@ -15,12 +15,7 @@ let config = merge(baseWebpackConfig, {
         test: /\.(css|pcss)$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          },
+          'style-loader',
           {
             loader: 'css-loader',
             options: {
