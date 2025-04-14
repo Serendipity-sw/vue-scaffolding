@@ -15,12 +15,6 @@
         "legacy": true
       }
     ],
-    [
-      "@babel/plugin-proposal-class-properties",
-      {
-        "loose": false
-      }
-    ],
     "@vue/babel-plugin-jsx"
   ]
 }

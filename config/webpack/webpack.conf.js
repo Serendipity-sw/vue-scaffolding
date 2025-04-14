@@ -28,7 +28,6 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /(node_modules)/,
         use: [
-          'cache-loader',
           'thread-loader',
           'babel-loader'
         ]
@@ -37,7 +36,6 @@ module.exports = {
         test: /\.ts$/,
         exclude: /node_modules/,
         use: [
-          'cache-loader',
           {
             loader: 'babel-loader',
             options: {babelrc: true}
